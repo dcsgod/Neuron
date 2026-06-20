@@ -1,0 +1,48 @@
+name: neuron-ide
+
+services:
+  # ─── Neuron IDE (FastAPI backend + React frontend) ───────────────
+  neuron:
+    build: .
+    image: neuronide/neuron:latest
+    container_name: neuron-ide
+    ports:
+      - "${PORT:-8000}:8000"
+    volumes:
+      # Mount your projects here — they appear at /workspace inside the container
+      - ./workspace:/workspace
+      # Persist .neuron memory, MLflow DB, and ChromaDB index across restarts
+      - neuron-data:/app/.neuron-global
+    environment:
+      OLLAMA_HOST: http://ollama:11434
+      DEFAULT_MODEL: ${DEFAULT_MODEL:-qwen2.5-coder:7b}
+      PORT: 8000
+    depends_on:
+      ollama:
+        condition: service_healthy
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-sf", "http://localhost:8000/"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # ─── Ollama (local LLM inference — CPU mode) ─────────────────────
+  ollama:
+    image: ollama/ollama:latest
+    container_name: neuron-ollama
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama-models:/root/.ollama
+    healthcheck:
+      test: ["CMD", "curl", "-sf", "http://localhost:11434/api/tags"]
+      interval: 10s
+      timeout: 5s
+      retries: 6
+      start_period: 10s
+    restart: unless-stopped
+
+volumes:
+  ollama-models:   # Persists pulled Ollama models between runs
+  neuron-data:     # Persists Neuron IDE state (memory, MLflow, index)

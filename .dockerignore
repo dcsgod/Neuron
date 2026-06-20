@@ -1,0 +1,37 @@
+# Git
+.git/
+.gitignore
+
+# Node
+node_modules/
+dist/
+
+# Tauri native build
+src-tauri/target/
+src-tauri/.cargo/
+
+# Python
+__pycache__/
+**/__pycache__/
+**/*.pyc
+**/*.pyo
+.venv/
+venv/
+*.egg-info/
+
+# Secrets
+.env
+.env.*
+!.env.example
+
+# IDE
+.vscode/
+.idea/
+*.swp
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Docker
+workspace/

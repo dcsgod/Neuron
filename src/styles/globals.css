@@ -1,0 +1,249 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ─── Base Reset ──────────────────────────────────────────────── */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body, #root {
+  height: 100%;
+  overflow: hidden;
+  background-color: #0a0a0f;
+  color: #e2e8f0;
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 13px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ─── Scrollbars ──────────────────────────────────────────────── */
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: #2a2a3d;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #3a3a55;
+}
+
+/* ─── Selection ───────────────────────────────────────────────── */
+::selection {
+  background: rgba(124, 58, 237, 0.3);
+  color: #e2e8f0;
+}
+
+/* ─── Glass Panel ─────────────────────────────────────────────── */
+.glass {
+  background: rgba(18, 18, 26, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* ─── Glow ────────────────────────────────────────────────────── */
+.glow-accent {
+  box-shadow: 0 0 20px rgba(124, 58, 237, 0.25);
+}
+
+/* ─── Code font ───────────────────────────────────────────────── */
+code, pre, .mono {
+  font-family: 'JetBrains Mono', 'Fira Code', monospace;
+  font-size: 12px;
+}
+
+/* ─── IDE Layout ──────────────────────────────────────────────── */
+.ide-layout {
+  display: grid;
+  grid-template-columns: 260px 1fr 360px;
+  grid-template-rows: 100%;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.ide-layout.right-collapsed {
+  grid-template-columns: 260px 1fr 0px;
+}
+
+.ide-layout.left-collapsed {
+  grid-template-columns: 0px 1fr 360px;
+}
+
+/* ─── Resize handle ───────────────────────────────────────────── */
+.resize-handle {
+  width: 2px;
+  background: #1e1e2e;
+  cursor: col-resize;
+  transition: background 0.15s ease;
+  flex-shrink: 0;
+}
+.resize-handle:hover {
+  background: #7c3aed;
+}
+
+/* ─── Tab bar ─────────────────────────────────────────────────── */
+.tab-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0 14px;
+  height: 36px;
+  font-size: 12px;
+  color: #64748b;
+  border-right: 1px solid #1e1e2e;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  white-space: nowrap;
+  user-select: none;
+}
+.tab-item:hover {
+  color: #94a3b8;
+  background: rgba(255, 255, 255, 0.03);
+}
+.tab-item.active {
+  color: #e2e8f0;
+  background: #0a0a0f;
+  border-bottom: 2px solid #7c3aed;
+}
+
+/* ─── File tree ───────────────────────────────────────────────── */
+.file-node {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 8px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.1s ease;
+  font-size: 12px;
+  color: #94a3b8;
+  user-select: none;
+}
+.file-node:hover {
+  background: rgba(255, 255, 255, 0.05);
+  color: #e2e8f0;
+}
+.file-node.selected {
+  background: rgba(124, 58, 237, 0.15);
+  color: #a78bfa;
+}
+
+/* ─── Agent chat message ──────────────────────────────────────── */
+.chat-message {
+  animation: fadeIn 0.2s ease-out;
+}
+
+.chat-message.user .bubble {
+  background: rgba(124, 58, 237, 0.15);
+  border: 1px solid rgba(124, 58, 237, 0.2);
+  border-radius: 12px 12px 4px 12px;
+}
+
+.chat-message.assistant .bubble {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 12px 12px 12px 4px;
+}
+
+/* ─── Token meter bar ─────────────────────────────────────────── */
+.token-bar-track {
+  height: 4px;
+  background: #1e1e2e;
+  border-radius: 2px;
+  overflow: hidden;
+}
+.token-bar-fill {
+  height: 100%;
+  border-radius: 2px;
+  transition: width 0.4s ease;
+  background: linear-gradient(90deg, #7c3aed, #a78bfa);
+}
+.token-bar-fill.warning {
+  background: linear-gradient(90deg, #f59e0b, #fcd34d);
+}
+.token-bar-fill.critical {
+  background: linear-gradient(90deg, #ef4444, #fca5a5);
+}
+
+/* ─── Typing indicator ────────────────────────────────────────── */
+.typing-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #7c3aed;
+  animation: bounce 1.2s infinite;
+}
+.typing-dot:nth-child(2) { animation-delay: 0.2s; }
+.typing-dot:nth-child(3) { animation-delay: 0.4s; }
+
+@keyframes bounce {
+  0%, 80%, 100% { transform: translateY(0); opacity: 0.5; }
+  40% { transform: translateY(-6px); opacity: 1; }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+/* ─── Status badge ────────────────────────────────────────────── */
+.status-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.status-dot.online { background: #10b981; box-shadow: 0 0 6px #10b981; }
+.status-dot.thinking { background: #f59e0b; animation: pulse 1.5s infinite; }
+.status-dot.error { background: #ef4444; }
+.status-dot.idle { background: #64748b; }
+
+/* ─── Command palette overlay ─────────────────────────────────── */
+.cmd-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(4px);
+  z-index: 1000;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding-top: 20vh;
+}
+
+/* ─── Step trace ──────────────────────────────────────────────── */
+.step-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 6px 0;
+  font-size: 11px;
+}
+.step-icon {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+.step-icon.done { background: rgba(16, 185, 129, 0.2); color: #10b981; }
+.step-icon.running { background: rgba(245, 158, 11, 0.2); color: #f59e0b; }
+.step-icon.error { background: rgba(239, 68, 68, 0.2); color: #ef4444; }
+.step-icon.pending { background: rgba(100, 116, 139, 0.2); color: #64748b; }
