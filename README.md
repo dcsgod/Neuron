@@ -2,6 +2,8 @@
 
 **AI-native IDE for Data Scientists, ML Engineers, and AI Engineers.**
 
+Neuron is an open-source **AI IDE for data science and machine learning** combining persistent project memory, an agent runtime, dataset intelligence, experiment tracking, MLflow workflows, model evaluation, research assistance, and cloud development.
+
 > Cursor for Data Scientists + MLflow + Cloud Console + AI Research Assistant + Agent Runtime
 
 Neuron is a local-first, context-aware IDE that understands your entire ML workflow — datasets, experiments, models, cloud infrastructure, and research — not just your code. Every project gets a persistent `.neuron/` intelligence layer that the agent reads before every response, so it never starts from zero.
